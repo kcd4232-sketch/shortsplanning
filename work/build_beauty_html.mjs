@@ -1,0 +1,175 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+const output = path.resolve('outputs/beauty_reels_10_plans_2026-10-23.html');
+const accounts = [
+  {name:'약손명가 진주점',handle:'yakson_jinju',followers:'1만',views:'5.8만 · 9.6만 · 6.8만',url:'https://www.instagram.com/yakson_jinju/reels/',role:'서비스와 웨딩 상담 연결'},
+  {name:'라파원장 / 라파스칼프 서산점',handle:'yeongyeon2454',followers:'3,482',views:'1,108 · 18.7만 · 3,176',url:'https://www.instagram.com/yeongyeon2454/reels/',role:'생활 고민 → 체크 → 저장'},
+  {name:'건하뷰티',handle:'gh___beauty',followers:'503',views:'543 · 2,070 · 2,796*',url:'https://www.instagram.com/gh___beauty/reels/',role:'뜻밖의 연결 → 질문 → 상담'},
+];
+
+const ideas = [
+  {
+    id:1,kind:'교육형',priority:true,topic:'얼굴·목',title:'사진 속 턱선이 신경 쓰일 때, 상담에서 보는 3가지',goal:'저장 → 상담 신뢰',viewer:'사진 각도마다 턱선이 달라 보여 관리 상담을 망설이는 사람',reference:'https://www.instagram.com/reel/DeZkfcayhlE/',referenceName:'건하뷰티 이중턱·뒷목',observed:'공개 캡션에 질문, 세 가지 고민, 관련 부위 설명, 맞춤 상담 안내가 이어진다.',originality:'목이 턱선의 원인이라고 단정하지 않고 상담에서 확인할 질문으로 재설계한다.',thumb:'턱선 상담 전 3가지',hook:'“턱선 고민, 턱만 보고 시작하지 않아요.”',length:'30초',props:'카드 3장, 펜, 삼각대',difficulty:'쉬움',cta:'저장',
+    scenes:[
+      ['0–3초','정면 상반신. 카드에 ‘턱선?’을 크게 써서 렌즈 옆에 든다.','“턱선 고민, 턱만 보고 시작하지 않아요.”','턱선 상담 전 3가지','카드를 화면 중앙으로 빠르게 가져오며 시작'],
+      ['3–10초','첫 카드 클로즈업. ‘언제/어느 각도’ 칸에 표시한다.','“어느 각도에서 가장 신경 쓰이는지 먼저 듣습니다.”','① 신경 쓰이는 상황','펜 끝에 맞춰 다음 컷으로 전환'],
+      ['10–22초','본인의 목·어깨를 가볍게 가리킨 뒤 두 번째 카드를 보여준다.','“목과 어깨가 불편한지도 묻지만, 이것만으로 원인을 단정하진 않아요.”','② 함께 살피는 불편','목·어깨를 누르거나 과장된 전후 화면은 넣지 않음'],
+      ['22–30초','세 번째 카드의 ‘범위/압’을 보여주고 다시 정면.','“원하는 관리 범위와 편한 압까지 정하면 상담이 쉬워집니다.”','③ 원하는 범위·압 / 저장해 두세요','마지막 2초에 세 카드가 한 화면에 보이게 정지'],
+    ],
+    instagram:'사진 속 턱선이 신경 쓰인다면 어떤 각도에서, 언제, 어떤 점이 불편한지 메모해 보세요. 관리 상담에서는 원하는 범위와 편한 압도 함께 확인합니다. 개인 상태에 따라 안내가 달라집니다. 저장해 두고 첫 상담 때 활용하세요. #윤곽관리 #에스테틱상담 #목어깨관리',
+    youtubeTitle:'턱선 관리 상담 전에 물어보는 3가지',youtubeDescription:'턱선 고민을 상담할 때 상황·함께 느끼는 불편·관리 선호를 어떻게 확인하는지 소개합니다. 특정 원인이나 효과를 단정하지 않습니다.',safety:'얼굴형 변화, 이중턱 제거 같은 결과 보장은 쓰지 않는다.'
+  },
+  {
+    id:2,kind:'교육형',priority:true,topic:'발·바디',title:'퇴근 후 발이 무거울 때 기록할 3가지',goal:'저장 → 관리 상담',viewer:'오래 서거나 앉은 날 저녁에 발이 무겁다고 느끼는 사람',reference:'https://www.instagram.com/reel/DenWl7ZT1o0/',referenceName:'라파원장 발 셀프케어',observed:'공개 캡션에 양말 자국과 무거운 발이라는 상황, 점검할 부위, 저장과 문의 안내가 있다.',originality:'원본의 셀프케어 동작 목록 대신 고객의 상황 기록과 편한 압 선택을 제시한다.',thumb:'발이 무거울 때 3가지',hook:'“퇴근하면 발이 무겁나요? 이 세 가지만 기록해 보세요.”',length:'28초',props:'본인 발, 빈 메모지, 발 모형(선택)',difficulty:'쉬움',cta:'저장',
+    scenes:[
+      ['0–3초','의자 아래 본인 발을 짧게 보여주고 메모지를 화면에 놓는다.','“퇴근하면 발이 무겁나요? 이 세 가지만 기록해 보세요.”','저녁 발 불편 기록법','발에서 메모지로 바로 컷'],
+      ['3–10초','메모지 탑뷰. ‘언제부터’를 쓴다.','“첫째, 언제부터 무거웠는지.”','① 시작 시간','숫자 1을 크게 띄움'],
+      ['10–20초','같은 구도에서 ‘서 있었나/앉아 있었나’ 체크하고 손바닥으로 모형을 가볍게 감싼다.','“둘째, 그날 오래 서 있었는지 앉아 있었는지. 셋째, 편한 압이 어느 정도인지.”','② 그날의 활동 ③ 편한 압','체크 표시 2개를 리듬에 맞춰 추가'],
+      ['20–28초','원장 정면. 메모지를 들어 보인다.','“갑자기 심하게 붓거나 아프다면 관리를 받기 전에 진료를 먼저 받아보세요.”','기록 저장 → 상담 때 보여주세요','메모지 세 항목을 2초간 고정'],
+    ],
+    instagram:'저녁에 발이 무겁다면 시작 시간, 그날의 활동, 편한 압을 적어 보세요. 관리 상담에도 도움이 됩니다. 갑작스러운 붓기나 심한 통증은 의료진과 상의하세요. 저장해 두고 필요할 때 꺼내 보세요. #발관리 #바디관리 #관리상담',
+    youtubeTitle:'퇴근 후 발이 무거울 때 기록할 3가지',youtubeDescription:'발이 무겁게 느껴지는 날 어떤 상황을 메모하고, 관리 중 편한 압을 어떻게 설명할지 알려드립니다.',safety:'붓기를 질환으로 진단하거나 마사지로 치료할 수 있다고 말하지 않는다.'
+  },
+  {
+    id:3,kind:'교육형',priority:false,topic:'피부',title:'세안 후 당김, 상담 전에 적어둘 질문 3개',goal:'저장 → 피부 상담',viewer:'세안 직후 당김을 느끼지만 어떤 제품·습관이 관련 있는지 모르는 사람',reference:'https://www.instagram.com/reel/DdnLeUryyiz/',referenceName:'건하뷰티 환절기 세안',observed:'공개 캡션에서 환절기 세안을 과하게 하지 말자는 피부 관리 방향을 제시한다. 해당 영상의 조회수는 265회로 고성과 근거가 아니다.',originality:'효과를 약속하는 제품 추천 대신 상담에 가져올 기록지를 제공하는 실험 기획이다.',thumb:'세안 후 당김 3문답',hook:'“세안 후 얼굴이 당긴다면 제품 하나만 보지 않아요.”',length:'29초',props:'수건, 실제 사용하는 세안제, 카드 3장',difficulty:'쉬움',cta:'저장',
+    scenes:[
+      ['0–3초','세면대 앞에서 수건을 들고 정면.','“세안 후 얼굴이 당긴다면 제품 하나만 보지 않아요.”','당김 상담 3문답','수건을 내리며 카드로 컷'],
+      ['3–10초','카드 1을 가까이 보여준다.','“첫째, 언제부터 그랬는지.”','① 시작 시점','카드 넘김'],
+      ['10–22초','세안제와 타월을 위에서 촬영. 카드 2·3을 차례로 둔다.','“둘째, 무엇을 얼마나 자주 쓰는지. 셋째, 씻은 뒤 어떤 제품이 편한지.”','② 사용 제품·빈도 ③ 사용감','실제 제품명·효과는 강조하지 않음'],
+      ['22–29초','정면, 카드 세 장을 함께 들어 보인다.','“기록해 두면 피부 상담에서 이야기가 더 쉬워져요.”','저장해 두고 상담 때 활용','3초 정지 화면'],
+    ],
+    instagram:'세안 후 당김이 반복된다면 시작 시점, 사용 제품과 빈도, 씻은 뒤 편한 사용감을 메모해 보세요. 자극이 계속되거나 심하면 진료를 고려하세요. #피부관리 #세안습관 #피부상담',
+    youtubeTitle:'세안 후 당길 때 상담 전에 정리할 3가지',youtubeDescription:'세안 뒤 당김을 설명할 때 도움이 되는 기록 항목 세 가지를 짧게 보여드립니다.',safety:'피부 질환을 화면으로 진단하지 않는다.'
+  },
+  {
+    id:4,kind:'교육형',priority:false,topic:'두피',title:'헤드스파 전에 먼저 묻는 3가지',goal:'팔로우 → 상담 신뢰',viewer:'헤드스파가 처음이거나 두피가 예민해 걱정하는 사람',reference:'https://www.instagram.com/yeongyeon2454/reels/',referenceName:'라파스칼프 서산점 공개 프로필',observed:'계정 소개에서 피부·두피·바디 관리를 다룬다는 점을 확인했다. 특정 두피 릴스의 고성과나 실제 영상 구조는 확인하지 못했다.',originality:'두피 소재를 신규 실험군으로 두고 고객의 선택권을 보여준다.',thumb:'헤드스파 전 3질문',hook:'“두피 관리, 시작 전에 이 세 가지부터 묻습니다.”',length:'27초',props:'샴푸대 또는 빈 의자, 샴푸 용기, 질문 카드',difficulty:'쉬움',cta:'팔로우',
+    scenes:[
+      ['0–3초','빈 샴푸대 또는 의자 정면. 질문 카드 셋을 보여준다.','“두피 관리, 시작 전에 이 세 가지부터 묻습니다.”','헤드스파 전 3질문','인트로 로고 없이 바로 질문'],
+      ['3–10초','카드 1 클로즈업.','“가려움이나 따가움이 있었는지.”','① 최근 불편감','표정 과장 없이 체크'],
+      ['10–21초','실제 샴푸 용기와 온도 조절 손잡이를 보여준다.','“최근 쓰는 제품과 편한 물 온도도 확인해요.”','② 사용 제품 ③ 편한 온도','용기 → 손잡이 매치 컷'],
+      ['21–27초','정면에서 카드 셋을 다시 보여준다.','“걱정되는 점을 미리 말해주시면 관리 범위를 함께 정할 수 있어요.”','두피·헤드스파 정보는 팔로우','마지막 화면 2초 고정'],
+    ],
+    instagram:'헤드스파가 처음이라면 최근 불편감, 사용 제품, 편한 물 온도를 알려주세요. 상태에 따라 관리 범위가 달라질 수 있습니다. 두피·헤드스파 상담 과정을 계속 소개하겠습니다. #두피관리 #헤드스파 #첫방문',
+    youtubeTitle:'헤드스파 받기 전에 확인하는 3가지',youtubeDescription:'두피 불편감과 사용 제품, 편한 물 온도를 먼저 확인하는 이유를 설명합니다.',safety:'상처·심한 염증 등 의심이 있으면 관리 대신 의료 상담을 안내한다.'
+  },
+  {
+    id:5,kind:'시연형',priority:true,topic:'목·어깨',title:'목·어깨 관리 압을 정하는 3단계',goal:'상담 문의',viewer:'목·어깨 관리가 아플까 봐 예약을 미루는 사람',reference:'https://www.instagram.com/reel/DeZkfcayhlE/',referenceName:'건하뷰티 이중턱·뒷목',observed:'공개 캡션에서 얼굴 고민을 목·어깨 상태와 함께 살핀다고 설명한다. 실제 손동작과 영상 컷은 확인하지 못했다.',originality:'시술 효과 대신 압 확인·고객 동의·조절 과정을 새 장면으로 제안한다.',thumb:'압은 이렇게 정해요',hook:'“세게 누르기 전에 먼저 손을 멈춥니다.”',length:'32초',props:'원장 본인 어깨 또는 상체 모형, 상담 카드',difficulty:'쉬움',cta:'공식 DM으로 상담',
+    scenes:[
+      ['0–3초','손바닥이 모형에 닿기 직전 정지.','“세게 누르기 전에 먼저 손을 멈춥니다.”','목·어깨 관리 압 정하기','멈춘 손을 첫 프레임으로 사용'],
+      ['3–10초','원장 정면, 상담 카드에 ‘피하고 싶은 부위’를 적는다.','“먼저 어디가 불편하고 어디는 피하고 싶은지 묻고요.”','① 먼저 묻기','펜 소리로 다음 컷'],
+      ['10–23초','같은 구도에서 손바닥을 모형에 넓고 가볍게 댄다.','“가볍게 시작하고, 진행 중에도 압이 편한지 확인해요.”','② 가볍게 시작 ③ 반응 확인','압을 세게 가하는 장면을 연출하지 않음'],
+      ['23–32초','손을 떼고 정면.','“불편하면 바로 멈추거나 조절합니다. 처음이라면 상담에서 말씀해 주세요.”','불편하면 언제든 조절 / 공식 DM 상담','정지 프레임과 문의 안내 2초'],
+    ],
+    instagram:'목·어깨 관리는 강하게 참는 과정이 아닙니다. 시작 전에 범위와 편한 압을 확인하고, 진행 중에도 조절할 수 있어요. 처음이라면 공식 DM으로 걱정되는 점을 알려주세요. #목어깨관리 #수기관리 #에스테틱상담',
+    youtubeTitle:'목·어깨 관리 압은 어떻게 정할까?',youtubeDescription:'관리 전에 묻고, 가볍게 시작하고, 고객 반응에 따라 조절하는 과정을 모형으로 보여드립니다.',safety:'통증을 참아야 효과가 있다는 표현을 피한다.'
+  },
+  {
+    id:6,kind:'시연형',priority:false,topic:'발·바디',title:'발 관리 전 손 위치를 설명하는 방법',goal:'조회수 → 저장',viewer:'발 관리 장면이 궁금하지만 강한 압이 걱정되는 사람',reference:'https://www.instagram.com/reel/DenWl7ZT1o0/',referenceName:'라파원장 발 셀프케어',observed:'공개 캡션은 발의 여러 부위와 부드러운 셀프케어를 언급한다. 원본 영상의 실제 손 위치는 확인하지 못했다.',originality:'고객에게 손 위치와 압을 미리 설명하는 샵의 상담 과정을 보여준다.',thumb:'발 관리 손 위치',hook:'“발 관리, 어디에 손을 대는지 먼저 보여드려요.”',length:'26초',props:'발 모형, 손수건, 작은 번호 카드',difficulty:'쉬움',cta:'저장',
+    scenes:[
+      ['0–3초','발 모형 탑뷰, 손바닥을 화면 위에 둔다.','“발 관리, 어디에 손을 대는지 먼저 보여드려요.”','발 관리 손 위치','손바닥을 천천히 프레임 안으로'],
+      ['3–10초','모형 옆에 번호 1 카드.','“먼저 불편한 부위와 피할 곳을 듣습니다.”','① 피할 곳 확인','카드 슬라이드'],
+      ['10–20초','넓은 손바닥 접촉을 모형에만 시연.','“넓고 가볍게 닿은 뒤 편한 압인지 물어요.”','② 가볍게 ③ 물어보기','같은 탑뷰로 전후를 비교'],
+      ['20–26초','원장 정면.','“아프면 바로 말씀해 주세요. 참을 필요 없어요.”','저장하고 첫 상담 때 말하기','마지막 2초 손 위치 이미지 고정'],
+    ],
+    instagram:'발 관리는 시작 전에 불편한 부위와 편한 압을 함께 확인합니다. 아프다면 바로 말해 주세요. 처음 받는 분을 위해 손 위치부터 보여드렸어요. 저장해 두고 상담 때 활용하세요. #발관리 #바디관리 #압조절',
+    youtubeTitle:'발 관리 전 손 위치와 압을 확인하는 과정',youtubeDescription:'발 모형으로 접촉 범위와 압을 조절하는 상담 과정을 설명합니다.',safety:'특정 부위를 누르면 질환이 좋아진다는 설명을 넣지 않는다.'
+  },
+  {
+    id:7,kind:'시연형',priority:false,topic:'두피',title:'헤드스파 물 온도 확인 장면',goal:'신뢰 → 상담',viewer:'샴푸대의 물 온도나 과정이 걱정되는 첫 방문 고객',reference:'https://www.instagram.com/yeongyeon2454/reels/',referenceName:'라파스칼프 서산점 공개 프로필',observed:'두피관리 전문 분야는 프로필에서 확인했다. 물 온도 시연 영상의 성과를 확인한 것은 아니다.',originality:'화려한 시술 결과 대신 고객에게 온도를 묻는 서비스 장면을 콘텐츠로 만든다.',thumb:'물 온도, 먼저 확인',hook:'“헤드스파 물 온도는 원장이 혼자 정하지 않아요.”',length:'24초',props:'빈 샴푸대, 수전, 손목, 타월',difficulty:'보통',cta:'공식 상담 문의',
+    scenes:[
+      ['0–3초','샴푸대에서 물이 흐르는 클로즈업.','“헤드스파 물 온도는 원장이 혼자 정하지 않아요.”','물 온도, 먼저 확인','물소리로 시작'],
+      ['3–9초','본인 손목에 물 온도를 확인.','“먼저 제 손목으로 확인하고.”','① 먼저 확인','수전 클로즈업으로 컷'],
+      ['9–18초','빈 샴푸대 측면에서 고객 자리 쪽을 향해 질문.','“고객에게 따뜻한지, 더 낮출지 묻습니다.”','② 고객에게 묻기','답을 기다리는 1초 정지'],
+      ['18–24초','온도 조절 손잡이를 보여준다.','“진행 중에도 언제든 조절할 수 있어요.”','③ 언제든 조절 / 상담 문의','손잡이와 문의 안내를 동시에 표시'],
+    ],
+    instagram:'헤드스파에서 편한 물 온도는 사람마다 다릅니다. 시작 전과 진행 중 모두 말씀해 주세요. 처음이라 걱정된다면 공식 상담 경로로 궁금한 점을 보내주세요. #헤드스파 #두피관리 #첫방문',
+    youtubeTitle:'헤드스파 물 온도는 어떻게 맞출까?',youtubeDescription:'물 온도를 먼저 확인하고 고객에게 묻고 진행 중 조절하는 과정을 보여드립니다.',safety:'촬영할 때 실제 고객과 개인정보가 화면에 나오지 않게 한다.'
+  },
+  {
+    id:8,kind:'고객 관심형',priority:false,topic:'웨딩',title:'웨딩 관리 상담에 보내면 좋은 3문장',goal:'상담 문의',viewer:'웨딩 준비 중 어떤 정보를 샵에 보내야 할지 모르는 예비 고객',reference:'https://www.instagram.com/reel/DevWrb5Tef-/',referenceName:'약손명가 진주점 웨딩 상체',observed:'공개 캡션이 드레스 형태와 어깨·목·쇄골 라인을 연결하고 웨딩 상담 DM을 안내한다.',originality:'변화 보장 대신 상담에 필요한 실제 정보를 정리해 고객의 문의 부담을 줄인다.',thumb:'웨딩 상담 3문장',hook:'“웨딩 관리 문의, 체중보다 먼저 이 정보를 알려주세요.”',length:'30초',props:'드레스 실루엣 카드, 달력, 메모장',difficulty:'쉬움',cta:'공식 상담 DM',
+    scenes:[
+      ['0–3초','빈 드레스 실루엣 카드와 원장 정면.','“웨딩 관리 문의, 체중보다 먼저 이 정보를 알려주세요.”','웨딩 상담 3문장','드레스 카드로 첫 프레임'],
+      ['3–10초','드레스 카드에 어깨·목선 부분을 표시.','“첫째, 드레스 형태와 신경 쓰이는 부위.”','① 드레스·관심 부위','표시선이 이어지며 컷'],
+      ['10–21초','달력과 메모장을 탑뷰로 보여준다.','“둘째, 촬영일과 예식일. 셋째, 피하고 싶은 관리와 편한 압.”','② 일정 ③ 관리 선호','날짜는 가상의 숫자 사용'],
+      ['21–30초','정면에서 실제 샵의 공식 상담 경로를 가리킨다.','“이 세 줄을 보내주시면 가능한 범위와 비용을 실제 메뉴 기준으로 안내할게요.”','공식 DM으로 3문장 보내기','실제 메뉴/가격만 사용'],
+    ],
+    instagram:'웨딩 관리 상담은 드레스 형태와 관심 부위, 촬영·예식 일정, 피하고 싶은 관리 방식을 알려주시면 시작하기 쉽습니다. 가능한 프로그램과 비용은 현재 메뉴 기준으로 안내합니다. 공식 DM으로 문의해 주세요. #웨딩관리 #에스테틱상담 #웨딩준비',
+    youtubeTitle:'웨딩 관리 상담할 때 보내면 좋은 3문장',youtubeDescription:'드레스 형태, 일정, 관리 선호를 정리하면 상담을 시작하기 쉽습니다.',safety:'드레스 핏이나 신체 라인이 반드시 바뀐다는 약속을 하지 않는다.'
+  },
+  {
+    id:9,kind:'고객 관심형',priority:false,topic:'첫 방문',title:'에스테틱 첫 방문, 상담은 이렇게 시작됩니다',goal:'예약 전 불안 감소',viewer:'예약 전에 과정과 비용을 알고 싶은 첫 고객',reference:'https://www.instagram.com/yakson_jinju/reels/',referenceName:'약손명가 진주점 공개 프로필',observed:'계정에서 지역 서비스와 관리 상담 경로를 확인했다. 특정 릴스의 첫 방문 상담 구조가 성과를 냈다는 근거는 없다.',originality:'관리 결과 대신 투명한 상담·범위·비용 설명을 영상으로 보여주는 신규 실험이다.',thumb:'첫 방문 3단계',hook:'“처음 오시면 바로 관리부터 시작하지 않아요.”',length:'32초',props:'빈 상담석, 실제 메뉴판, 예약표 모형',difficulty:'쉬움',cta:'프로필의 예약 안내 확인',
+    scenes:[
+      ['0–3초','빈 상담 의자와 원장 정면.','“처음 오시면 바로 관리부터 시작하지 않아요.”','첫 방문 3단계','입구에서 상담석으로 컷'],
+      ['3–11초','상담 카드 클로즈업.','“오늘의 고민과 피하고 싶은 부위부터 듣습니다.”','① 듣기','펜으로 항목 표시'],
+      ['11–23초','빈 관리실과 실제 메뉴판을 차례로 보여준다.','“가능한 관리 범위, 시간, 비용을 설명합니다.”','② 범위·시간·비용','실제 내용만 초점 처리 없이 명확히'],
+      ['23–32초','원장 정면.','“설명을 들은 뒤 결정하셔도 됩니다. 예약 방법은 프로필에 정리해뒀어요.”','③ 선택 / 프로필 예약 안내','프로필 안내만 마지막 3초'],
+    ],
+    instagram:'첫 방문이 낯설다면 상담 흐름부터 확인하세요. 고민을 듣고 범위·시간·비용을 안내한 뒤 선택하실 수 있습니다. 실제 프로그램은 현재 메뉴 기준으로 설명합니다. 예약 방법은 프로필에서 확인하세요. #에스테틱첫방문 #피부관리상담 #샵예약',
+    youtubeTitle:'에스테틱 첫 방문 상담은 어떻게 진행될까?',youtubeDescription:'첫 방문 때 고민 확인, 관리 설명, 예약 결정을 어떤 순서로 하는지 보여드립니다.',safety:'실제로 제공하지 않는 프로그램이나 가격을 화면에 쓰지 않는다.'
+  },
+  {
+    id:10,kind:'고객 관심형',priority:false,topic:'문의',title:'목·어깨 관리 문의 DM, 이 3줄이면 됩니다',goal:'상담 문의',viewer:'DM으로 무엇을 물어볼지 몰라 문의를 미루는 사람',reference:'https://www.instagram.com/reel/DeZkfcayhlE/',referenceName:'건하뷰티 이중턱·뒷목',observed:'공개 캡션 마지막에 1:1 맞춤 상담을 DM으로 안내한다. 실제 DM 전환율은 확인 불가다.',originality:'댓글 키워드 반복 대신 개인정보를 공개하지 않고 공식 DM으로 문의하는 문장 예시를 제공한다.',thumb:'상담 DM 3줄',hook:'“관리 문의, 첫 DM은 이 세 줄이면 충분해요.”',length:'25초',props:'휴대전화 메모 앱의 가상 예시 화면, 삼각대',difficulty:'쉬움',cta:'공식 DM 보내기',
+    scenes:[
+      ['0–3초','휴대전화 메모 화면. 실제 고객 대화는 사용하지 않는다.','“관리 문의, 첫 DM은 이 세 줄이면 충분해요.”','상담 DM 3줄','타이핑 시작 화면으로 컷'],
+      ['3–10초','메모 첫 줄을 타이핑한다.','“첫째, 관심 부위. 예를 들면 목과 어깨요.”','① 관심 부위','한 줄씩 표시'],
+      ['10–19초','둘째·셋째 줄을 타이핑한다.','“둘째, 언제 불편한지. 셋째, 원하는 시간과 피하고 싶은 압.”','② 상황 ③ 일정·선호','개인정보는 예시로도 쓰지 않음'],
+      ['19–25초','원장 정면으로 전환.','“본인 상황에 맞게 바꿔 공식 DM으로 보내주세요.”','공식 DM으로 문의','마지막 화면에 세 줄 전체 표시'],
+    ],
+    instagram:'상담 DM을 어떻게 시작할지 모르겠다면 ‘관심 부위 + 불편한 상황 + 가능한 시간·관리 선호’ 세 줄이면 충분합니다. 개인정보는 댓글에 남기지 말고 공식 DM으로 보내주세요. #목어깨관리 #에스테틱상담 #관리문의',
+    youtubeTitle:'목·어깨 관리 문의 DM, 이렇게 보내세요',youtubeDescription:'관심 부위와 상황, 일정과 관리 선호를 짧게 전하는 예시를 보여드립니다.',safety:'고객의 실제 DM, 전화번호, 상담 기록을 촬영하지 않는다.'
+  }
+];
+
+const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const link = (url,label) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)} <span aria-hidden="true">↗</span></a>`;
+const accountRows = accounts.map(a => `<tr><th scope="row">${link(a.url,a.name)}<small>@${esc(a.handle)}</small></th><td>${esc(a.followers)}</td><td>${esc(a.views)}</td><td>${esc(a.role)}</td></tr>`).join('');
+const index = ideas.map(x => `<a class="index-link" href="#idea-${x.id}"><span class="index-number">${String(x.id).padStart(2,'0')}</span><span>${esc(x.title)}</span><span class="tiny-tag">${esc(x.kind)}</span></a>`).join('');
+
+function renderIdea(x) {
+  const rows = x.scenes.map(scene => `<tr><th scope="row">${esc(scene[0])}</th><td>${esc(scene[1])}</td><td>“${esc(scene[2].replace(/^“|”$/g,''))}”</td><td>${esc(scene[3])}</td><td>${esc(scene[4])}</td></tr>`).join('');
+  return `<details class="idea" id="idea-${x.id}" data-kind="${esc(x.kind)}" ${x.priority?'open':''}>
+    <summary><span class="idea-num">${String(x.id).padStart(2,'0')}</span><span class="summary-main"><span class="summary-kicker">${esc(x.kind)} · ${esc(x.topic)} ${x.priority?'· 먼저 촬영':''}</span><strong>${esc(x.title)}</strong></span><span class="summary-toggle" aria-hidden="true">＋</span></summary>
+    <div class="idea-body">
+      <div class="meta-grid">
+        <div><span class="meta-label">목표</span><strong>${esc(x.goal)}</strong></div><div><span class="meta-label">타깃 고민</span><strong>${esc(x.viewer)}</strong></div><div><span class="meta-label">길이·난이도</span><strong>${esc(x.length)} · ${esc(x.difficulty)}</strong></div><div><span class="meta-label">준비물</span><strong>${esc(x.props)}</strong></div>
+      </div>
+      <div class="evidence-grid"><div class="evidence observed"><span class="eyebrow">확인된 참고</span><p>${esc(x.observed)}</p><p>${link(x.reference,x.referenceName)}</p></div><div class="evidence proposal"><span class="eyebrow">이번에 새로 만들 부분</span><p>${esc(x.originality)}</p></div></div>
+      <div class="hook-box"><span>썸네일: ${esc(x.thumb)}</span><strong>${esc(x.hook)}</strong><small>위 대사는 새로 작성한 도입 대사입니다. 원본 영상 첫 3초 대사가 아닙니다.</small></div>
+      <h4>컷별 촬영 순서 <span>체크하며 따라 하세요</span></h4>
+      <div class="table-scroll"><table class="storyboard"><thead><tr><th>시간</th><th>화면·카메라</th><th>원장 대사</th><th>화면 자막</th><th>전환·강조</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="publish-grid"><div><h4>Instagram 게시 문구</h4><p>${esc(x.instagram)}</p></div><div><h4>YouTube Shorts</h4><p><b>제목</b> ${esc(x.youtubeTitle)}</p><p><b>설명</b> ${esc(x.youtubeDescription)}</p></div></div>
+      <div class="closing"><p><b>한 가지 주 CTA</b> ${esc(x.cta)}</p><p><b>촬영·표현 주의</b> ${esc(x.safety)}</p></div>
+    </div>
+  </details>`;
+}
+
+const html = `<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>뷰티 릴스·쇼츠 10편 촬영 기획서</title>
+<style>
+:root{--ink:#262323;--muted:#625e5b;--paper:#fff;--bg:#f7f4f1;--rose:#9f4965;--rose-light:#fbebf0;--teal:#2b6f6b;--teal-light:#e8f4f1;--line:#e5ddd7;--gold:#a77732}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Malgun Gothic','Apple SD Gothic Neo',Arial,sans-serif;line-height:1.65}a{color:var(--teal);text-decoration-thickness:1px;text-underline-offset:3px}a:hover{color:#184d49}button{font:inherit;cursor:pointer}main{max-width:1120px;margin:auto;padding:24px 20px 72px}.hero{background:linear-gradient(120deg,#2a4440,#265b58 60%,#7f485d);color:#fff;padding:42px 44px;border-radius:22px;margin-bottom:22px}.hero .eyebrow{color:#d9f0e7}.hero h1{font-size:clamp(30px,4vw,50px);line-height:1.18;letter-spacing:-.04em;margin:10px 0 14px}.hero p{max-width:760px;margin:0;color:#f5efee}.hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.chip{border:1px solid #ffffff60;border-radius:999px;padding:5px 12px;font-size:13px}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}.toolbar button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:8px 14px}.toolbar button:hover,.toolbar button.active{background:var(--teal);border-color:var(--teal);color:#fff}.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;margin:18px 0}.panel h2{font-size:25px;letter-spacing:-.03em;margin:0 0 16px}.panel h3{font-size:18px;margin:18px 0 8px}.eyebrow{display:inline-block;color:var(--rose);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.lead{font-size:18px;margin-top:0}.small{font-size:13px;color:var(--muted)}.notice{border-left:4px solid var(--gold);padding:11px 16px;background:#fff7e9;border-radius:0 10px 10px 0}.stat-grid,.recipe,.schedule{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat,.step,.day{padding:16px;border:1px solid var(--line);border-radius:13px;background:#fff}.stat strong,.step strong,.day strong{display:block}.stat span,.step span,.day span{color:var(--muted);font-size:13px}.step{border-top:4px solid var(--rose)}.step:nth-child(2){border-top-color:var(--teal)}.step:nth-child(3){border-top-color:var(--gold)}.table-scroll{overflow-x:auto}.compact,.storyboard{border-collapse:collapse;width:100%}.compact th,.compact td,.storyboard th,.storyboard td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.compact thead,.storyboard thead{background:#f3eeeb}.compact small{display:block;color:var(--muted)}.compact th{min-width:160px}.compact td{min-width:110px}.index{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.index-link{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);padding:12px 14px;border-radius:12px;text-decoration:none;color:var(--ink);font-size:14px}.index-link:hover{border-color:var(--teal);background:var(--teal-light)}.index-number{font-weight:800;color:var(--rose);font-variant-numeric:tabular-nums}.tiny-tag{margin-left:auto;white-space:nowrap;color:var(--muted);font-size:12px}.idea{background:#fff;border:1px solid var(--line);border-radius:16px;margin:12px 0;scroll-margin-top:16px;overflow:hidden}.idea[hidden]{display:none}.idea summary{display:flex;align-items:center;gap:15px;list-style:none;padding:19px 22px;cursor:pointer}.idea summary::-webkit-details-marker{display:none}.idea summary:hover{background:#faf7f5}.idea[open] summary{border-bottom:1px solid var(--line)}.idea-num{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:50%;background:var(--rose-light);color:var(--rose);font-weight:800}.summary-main{display:flex;flex-direction:column;gap:2px}.summary-main strong{font-size:18px;line-height:1.35}.summary-kicker{font-size:12px;color:var(--teal);font-weight:700}.summary-toggle{margin-left:auto;color:var(--rose);font-size:25px}.idea[open] .summary-toggle{transform:rotate(45deg)}.idea-body{padding:21px 22px 27px}.meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.meta-grid>div{background:#f8f6f4;border-radius:10px;padding:11px}.meta-grid strong{display:block;font-size:14px;line-height:1.45}.meta-label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}.evidence-grid,.publish-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:17px 0}.evidence{border-radius:12px;padding:16px}.observed{background:var(--teal-light)}.proposal{background:var(--rose-light)}.evidence p{margin:6px 0;font-size:14px}.hook-box{border:1px solid #d7b7c2;background:#fff9fb;padding:18px;border-radius:12px;margin:18px 0}.hook-box span,.hook-box small{display:block;color:var(--muted);font-size:13px}.hook-box strong{display:block;font-size:20px;line-height:1.4;margin:7px 0}.idea h4{margin:21px 0 8px;font-size:17px}.idea h4 span{font-size:12px;color:var(--muted);font-weight:400;margin-left:8px}.storyboard{font-size:13px;min-width:780px}.storyboard th:first-child{min-width:80px}.storyboard td:nth-child(2){min-width:170px}.storyboard td:nth-child(3){min-width:180px}.publish-grid>div{border:1px solid var(--line);padding:15px;border-radius:12px}.publish-grid h4{margin:0 0 8px}.publish-grid p{font-size:14px;margin:5px 0}.closing{display:flex;gap:20px;flex-wrap:wrap;padding:11px 16px;background:#f7f4f1;border-radius:11px}.closing p{margin:4px 0;font-size:14px}.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.checklist label{display:flex;align-items:flex-start;gap:9px;padding:9px 10px;background:#f8f6f4;border-radius:8px}.checklist input{margin-top:5px;accent-color:var(--teal)}.page-footer{text-align:center;color:var(--muted);font-size:13px;margin-top:30px}.print-note{color:var(--muted);font-size:12px}
+@media(max-width:780px){main{padding:12px 12px 48px}.hero{padding:30px 23px}.panel{padding:20px}.stat-grid,.recipe,.schedule,.meta-grid,.evidence-grid,.publish-grid,.index,.checklist{grid-template-columns:1fr}.idea summary{padding:16px}.idea-body{padding:15px}.tiny-tag{display:none}.summary-main strong{font-size:16px}.compact{font-size:13px}}
+@media print{body{background:#fff}main{max-width:none;padding:0}.hero{border-radius:0;margin:0;background:#fff;color:#000;padding:15px 0}.hero p,.hero .eyebrow{color:#000}.hero .chip{color:#000;border-color:#999}.toolbar,.print-note{display:none}.panel,.idea{break-inside:avoid;border-color:#bbb;margin:10px 0}.idea-body{display:block!important}.idea summary{border-bottom:1px solid #bbb}.idea[hidden]{display:block!important}.table-scroll{overflow:visible}.storyboard{min-width:0;font-size:10px}.compact,.storyboard{font-size:10px}a{color:#000;text-decoration:none}}
+</style></head><body><main>
+<header class="hero"><span class="eyebrow">촬영 가능한 실행 문서 · 2026.10.23</span><h1>뷰티 릴스·쇼츠<br>10편 촬영 기획서</h1><p>고객이 겪는 상황을 먼저 보여주고, 원장의 상담·관리 기준으로 답합니다. 조회수와 실제 문의를 함께 확인하도록 설계했습니다.</p><div class="chips"><span class="chip">교육 4편</span><span class="chip">시연 3편</span><span class="chip">고객 관심 3편</span><span class="chip">우선 촬영 3편 표시</span></div></header>
+<div class="toolbar" aria-label="문서 보기 도구"><button type="button" class="filter active" data-filter="all">전체 10편</button><button type="button" class="filter" data-filter="교육형">교육형</button><button type="button" class="filter" data-filter="시연형">시연형</button><button type="button" class="filter" data-filter="고객 관심형">고객 관심형</button><button type="button" id="expand">모두 펼치기</button><button type="button" id="print">인쇄하기</button></div>
+<section class="panel" aria-labelledby="plan-title"><span class="eyebrow">01 · 기획문</span><h2 id="plan-title">이번 10편의 방향</h2><p class="lead">레퍼런스의 공개 캡션에서 확인된 전개는 <b>낯선 질문 → 시청자 상황·체크 항목 → 관리 설명 → 행동 안내</b>입니다. 이번 기획은 이 흐름을 새 소재와 새 대사로 다시 만들었습니다.</p><div class="recipe"><div class="step"><span>0–3초</span><strong>한 문장 질문</strong><p>“내 이야기”라고 느낄 구체적인 상황으로 시작합니다.</p></div><div class="step"><span>3–25초</span><strong>2~3개만 보여주기</strong><p>고객이 확인할 점과 원장이 실제로 묻거나 시연하는 과정을 보여줍니다.</p></div><div class="step"><span>마지막 5초</span><strong>행동 하나</strong><p>저장 또는 공식 상담 중 한 가지만 요청합니다.</p></div></div><p class="notice"><b>확인 범위:</b> Chrome은 사용하지 않았습니다. 팔로워·조회수는 앱 내 브라우저의 Instagram 공개 프로필에서 확인했습니다. 상세 캡션 구조는 이전 공개 상세 화면 관찰 기록을 참고했습니다. 현재 개별 영상은 로그인 안내로 전환돼 실제 첫 3초, 길이, 편집, 저장·공유, 광고, 예약 성과를 재확인하지 못했습니다. 아래 컷과 대사는 모두 새 제안입니다.</p></section>
+<section class="panel" aria-labelledby="research-title"><span class="eyebrow">02 · 확인된 계정 수치</span><h2 id="research-title">레퍼런스와 비교한 3계정</h2><div class="table-scroll"><table class="compact"><thead><tr><th>계정</th><th>팔로워</th><th>최근 릴스 탭 조회수</th><th>기획에 참고한 방식</th></tr></thead><tbody>${accountRows}</tbody></table></div><p class="small">공개 화면 약 2026-10-23 오전 11시 20~30분(KST)의 스냅샷. *건하뷰티의 2,796회 영상은 다른 계정이 게시 주체인 공동 게시물로 기록돼 독자 성과에 포함하지 않습니다. 조회수와 현재 팔로워는 기준 시점이 달라 단순 비율로 효과를 단정할 수 없습니다.</p><div class="stat-grid"><div class="stat"><strong>${link('https://www.instagram.com/reel/DeZkfcayhlE/','건하뷰티 이중턱')}</strong><span>뜻밖의 연결과 고객 고민 체크가 레퍼런스 구조에 가장 가깝다.</span></div><div class="stat"><strong>${link('https://www.instagram.com/reel/DenWl7ZT1o0/','서산 발 케어')}</strong><span>일상 불편과 짧은 체크 목록을 저장 행동으로 연결한다.</span></div><div class="stat"><strong>${link('https://www.instagram.com/reel/DevWrb5Tef-/','진주 웨딩 관리')}</strong><span>구체적인 행사·고민을 지역 샵 상담으로 연결한다.</span></div></div></section>
+<section class="panel" aria-labelledby="prep-title"><span class="eyebrow">03 · 촬영 전에</span><h2 id="prep-title">준비 순서</h2><div class="checklist"><label><input type="checkbox">세로 9:16, 스마트폰 렌즈와 마이크 확인</label><label><input type="checkbox">촬영할 상담 카드·모형·수건만 준비</label><label><input type="checkbox">한 장면의 자막을 두 줄 이내로 정리</label><label><input type="checkbox">실제 프로그램·가격·공식 문의 경로 확인</label><label><input type="checkbox">고객이 나온다면 촬영·게시 동의 확인</label><label><input type="checkbox">의료 효과 보장·전후 과장 표현 제거</label></div><h3>먼저 찍을 3편</h3><div class="schedule"><div class="day"><span>1순위 · 교육</span><strong><a href="#idea-1">① 턱선 상담 전 3가지</a></strong><p>고객 고민과 원장의 질문을 동시에 보여줍니다.</p></div><div class="day"><span>2순위 · 교육</span><strong><a href="#idea-2">② 퇴근 후 발 기록법</a></strong><p>확인된 발 주제 관심을 새 기록형 콘텐츠로 전환합니다.</p></div><div class="day"><span>3순위 · 시연</span><strong><a href="#idea-5">⑤ 목·어깨 압 조절</a></strong><p>실제 관리 방식과 고객 선택권을 보여줍니다.</p></div></div></section>
+<section class="panel" aria-labelledby="index-title"><span class="eyebrow">04 · 빠른 목차</span><h2 id="index-title">만들 영상 선택하기</h2><div class="index">${index}</div><p class="print-note">제목을 누르면 해당 촬영안으로 이동합니다. ‘모두 펼치기’를 누른 뒤 인쇄할 수 있습니다.</p></section>
+<section id="ideas" aria-label="릴스와 쇼츠 10편 상세 기획">${ideas.map(renderIdea).join('\n')}</section>
+<section class="panel" aria-labelledby="measure-title"><span class="eyebrow">05 · 게시 후 검토</span><h2 id="measure-title">조회수와 실제 고객 유입을 함께 기록</h2><div class="table-scroll"><table class="compact"><thead><tr><th>확인 시점</th><th>성장 지표</th><th>고객 유입 지표</th><th>다음 결정</th></tr></thead><tbody><tr><th>게시 후 24시간</th><td>조회수·팔로우 증가</td><td>프로필 방문·DM 문의</td><td>도입 자막이 고객 문제를 분명히 말하는지 확인</td></tr><tr><th>게시 후 72시간</th><td>조회수·저장·공유·댓글</td><td>문의 내용 분류</td><td>저장형과 상담형의 반응을 따로 비교</td></tr><tr><th>게시 후 7일</th><td>조회수 1,000회당 저장·문의</td><td>문의 수·실제 예약 수</td><td>조회수는 높지만 문의가 적으면 CTA·타깃 수정</td></tr></tbody></table></div><p class="small">숫자는 자체 계정의 정당한 인사이트와 예약 기록이 있을 때만 기입합니다. 경쟁 계정의 DM·예약, 비공개 저장·공유를 추정하지 않습니다. 댓글과 예약의 인과관계를 단정하지 않습니다.</p></section>
+<footer class="page-footer">원본 콘텐츠의 대사·화면·음원을 복제하지 않는 신규 촬영안 · HTML 단일 파일</footer>
+</main><script>
+const ideasOnPage=[...document.querySelectorAll('.idea')];
+document.querySelectorAll('.filter').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));button.classList.add('active');let selected=button.dataset.filter;ideasOnPage.forEach(card=>{card.hidden=selected!=='all'&&card.dataset.kind!==selected;});}));
+document.querySelectorAll('.index-link').forEach(anchor=>anchor.addEventListener('click',()=>{ideasOnPage.forEach(card=>card.hidden=false);document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));const card=document.querySelector(anchor.getAttribute('href'));if(card)card.open=true;}));
+document.getElementById('expand').addEventListener('click',event=>{const open=ideasOnPage.some(card=>!card.open);ideasOnPage.forEach(card=>card.open=open);event.currentTarget.textContent=open?'모두 접기':'모두 펼치기';});
+document.getElementById('print').addEventListener('click',()=>{ideasOnPage.forEach(card=>{card.hidden=false;card.open=true});window.print();});
+window.addEventListener('beforeprint',()=>{ideasOnPage.forEach(card=>{card.hidden=false;card.open=true})});
+</script></body></html>`;
+
+fs.mkdirSync(path.dirname(output), {recursive:true});
+fs.writeFileSync(output, html, 'utf8');
+console.log(JSON.stringify({output,ideas:ideas.length,bytes:Buffer.byteLength(html,'utf8')}));

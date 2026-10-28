@@ -1,0 +1,26 @@
+# Browser sessions and generated logs
+/.playwright-mcp/
+playwright-report/
+test-results/
+*.log
+
+# Download bundles duplicate the tracked project sources
+*.zip
+/outputs/*bundle*/
+
+# Local dependencies and caches
+node_modules/
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local credentials and environment settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.json
